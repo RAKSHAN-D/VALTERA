@@ -1,0 +1,117 @@
+/* ===== BASE STYLING ===== */
+body {
+  background-color: #f4fff6;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #2e7d32;
+}
+
+/* ===== HEADINGS ===== */
+h1, h2 {
+  text-align: center;
+  color: #2e7d32;
+  margin-bottom: 20px;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 10px; /* reduced from 20px */
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 0.8s ease-out;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+    margin-top: 10px;  /* reduced from 30px */
+    margin-bottom: 20px;
+    animation: fadeInUp 0.8s ease-out;
+  }
+  
+
+/* ===== PRE BLOCK ===== */
+pre {
+  background: #eaffea;
+  border: 2px solid #c5e1c5;
+  border-radius: 12px;
+  padding: 30px;
+  margin: 20px auto;
+  width: 90%;
+  max-width: 900px;
+  font-size: 1.05rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+  box-shadow: 0 8px 16px rgba(0, 128, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+pre:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 100, 0, 0.2);
+}
+
+/* ===== DESCRIPTION BLOCK ===== */
+.DESCRIPTION {
+  margin-top: 15px;
+  padding: 20px;
+  background: #f0fff0;
+  border-left: 6px solid #2e7d32;
+  border-radius: 8px;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #1b5e20;
+  transition: background-color 0.3s ease;
+}
+
+.DESCRIPTION:hover {
+  background-color: #e3ffe3;
+}
+
+/* ===== RESPONSIBILITIES HEADER ===== */
+.head {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 15px 0 8px 0;
+  color: #256928;
+  position: relative;
+}
+
+/* ===== BULLET POINTS WITH ICONS ===== */
+.DESCRIPTION::before {
+  content: "📘 ";
+}
+
+.DESCRIPTION li::before {
+  content: "✔️ ";
+  margin-right: 8px;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== MEDIA RESPONSIVENESS ===== */
+@media (max-width: 768px) {
+  pre {
+    padding: 20px;
+    font-size: 0.95rem;
+  }
+
+  h1 {
+    font-size: 1.7rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+}

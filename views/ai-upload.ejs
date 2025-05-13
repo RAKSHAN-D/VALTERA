@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI File Analysis</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #e8f5e9);
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+      margin-top: -200px;
+    }
+
+    h2 {
+      color: #2e7d32;
+      margin-bottom: 30px;
+      font-size: 1.8rem;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 14px;
+      margin: 12px 0;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 14px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.02);
+    }
+
+    .summary-btn {
+      background-color: #81c784;
+      color: white;
+    }
+
+    .topic-btn {
+      background-color: #64b5f6;
+      color: white;
+    }
+
+    .question-btn {
+      background-color: #ba68c8;
+      color: white;
+    }
+
+    #manualSubmit {
+      background-color: #388e3c;
+      color: white;
+      display: none;
+    }
+
+    #manualSubmit:hover {
+      background-color: #2e7d32;
+    }
+
+    #topicField {
+      display: none;
+    }
+ 
+.footer-buttons {
+  margin-top: 500px;
+  text-align: center;
+  margin-left: -630px;
+}
+
+.footer-btn {
+  display: inline-block;
+  background-color: #4caf50;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  margin: 10px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.footer-btn:hover {
+  background-color: #388e3c;
+}
+
+
+  </style>
+
+  <script>
+    function submitForm(actionType) {
+      const actionInput = document.getElementById('action');
+      const topicField = document.getElementById('topicField');
+      const submitBtn = document.getElementById('manualSubmit');
+      const form = document.getElementById('aiForm');
+
+      actionInput.value = actionType;
+
+      if (actionType === 'summary') {
+        topicField.style.display = 'none';
+        submitBtn.style.display = 'none';
+        form.submit();
+      } else {
+        topicField.style.display = 'block';
+        submitBtn.style.display = 'block';
+        document.querySelector('input[name="topicName"]').focus();
+      }
+    }
+
+    window.onload = function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('fileNotFound') === 'true') {
+        alert("⚠️ File not found in the database. Please upload the file first.");
+      }
+    };
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h2>🧠 AI-Powered File Insights</h2>
+
+    <form id="aiForm" action="/ai-upload" method="POST">
+      <input type="text" name="title" placeholder="Enter filename (e.g:NOTES1)" required>
+
+      <div id="topicField">
+        <input type="text" name="topicName" placeholder="Enter topic name...">
+      </div>
+
+      <input type="hidden" id="action" name="action" value="">
+
+      <button type="button" class="summary-btn" onclick="submitForm('summary')">📝 Summary of Entire File</button>
+      <button type="button" class="topic-btn" onclick="submitForm('topic-explanation')">📚 Topic Explanation + Summary</button>
+      <button type="button" class="question-btn" onclick="submitForm('important-questions')">❓ Important Questions of Topic</button>
+
+      <button type="submit" id="manualSubmit">Submit Topic Request</button>
+    </form>
+  </div>
+  <div class="footer-buttons">
+    <a href="/student-dashboard" class="footer-btn">🔙 Back to Student Dashboard</a>
+    <a href="/teacher-dashboard" class="footer-btn">🔙 Back to Teacher Dashboard</a>
+  </div>
+  </body>
+  
+</html>

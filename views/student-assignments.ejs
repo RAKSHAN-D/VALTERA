@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Submitted Assignments</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f6fff8;
+      padding: 30px;
+      margin: 0;
+    }
+
+    h2 {
+      color: #2d6a4f;
+      font-size: 26px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #2d6a4f;
+      color: white;
+    }
+
+    td a {
+      color: #2d6a4f;
+      text-decoration: none;
+    }
+
+    td a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Your Submitted Assignments</h2>
+
+  <% if (assignments.length === 0) { %>
+    <p>You have submitted 0 assignments.</p>
+  <% } else { %>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Submitted At</th>
+          <th>Teacher</th>
+          <th>View/Download</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% assignments.forEach(assignment => { %>
+          <tr>
+            <td><%= assignment.title %></td>
+            <td><%= assignment.submitted_at %></td>
+            <td><%= assignment.teacher_username %></td>
+            <td>
+              <a href="/uploads/<%= assignment.file_path %>" target="_blank">👁️ View</a> |
+              <a href="/uploads/<%= assignment.file_path %>" download>⬇️ Download</a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+
+</body>
+</html>

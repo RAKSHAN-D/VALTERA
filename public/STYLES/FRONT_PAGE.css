@@ -1,0 +1,164 @@
+
+
+.gradient-background {
+  background: linear-gradient(300deg, #00bfff, #ff4c68, #ef8172);
+  background-size: 180% 180%;
+  animation: gradient-animation 18s ease infinite;
+}
+.bg-gradient {
+  background-color: #4e944f !important;
+  background-image: none !important; /* Removes Bootstrap's default gradient */
+}
+.icon-link{
+  color: #0d5b0f !important;
+  font-weight: 500;
+}
+.container {
+  height: auto !important;
+  overflow: visible;
+}
+.btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #4e944f;
+    --bs-btn-border-color: #4e944f;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #4e944f;
+    --bs-btn-hover-border-color: #4e944f;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #4e944f;
+    --bs-btn-active-border-color: #4e944f;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #4e944f;
+    --bs-btn-disabled-border-color: #4e944f;
+}
+.navbar-brand{
+  background-color: #4e944f;
+}
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.icon-square {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.75rem;
+}
+
+.profile-img {
+  border-radius: 50%;
+  height: 100px;
+}
+.row
+{
+  margin: 0;
+  padding: 0;
+}
+.btn-primary:hover {
+  background-color: green;  /* Changes background */
+  color: white;                /* Changes text color */
+  transform: scale(1.1);       /* Slightly increases size */
+  transition: 0.3s ease-in-out; /* Smooth effect */
+}
+/* Apply a soft green background */
+body {
+  background-color: #f4fff6;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* VAULTERA heading animation */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+h1.display-4 {
+  color: #2e7d32;
+  animation: fadeInUp 1s ease-out forwards;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+/* Paragraph styling */
+.lead {
+  color: #333;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+/* Register/Login Buttons */
+.btn-primary {
+  background-color: #2e7d32;
+  border-color: #d0d5d1;
+}
+
+.btn-primary:hover {
+  background-color: #256928;
+  border-color: #1e5b21;
+}
+
+/* Image styling */
+
+.image-container {
+  position: relative;
+  width: 90%;
+  max-width: 550px;
+  margin: 30px auto;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  border: 4px solid #4CAF50;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.image-container:hover {
+  transform: scale(1.03);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.image-container:hover img {
+  transform: scale(1.05);
+  filter: brightness(90%);
+}
+
+.image-overlay {
+  position: absolute;
+  bottom: 0;
+  background: rgba(76, 175, 80, 0.85); /* Green overlay */
+  color: white;
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 1rem;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-container:hover .image-overlay {
+  opacity: 1;
+}
+

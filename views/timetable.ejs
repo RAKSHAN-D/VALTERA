@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Time Table</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #2e7d32;
+    }
+
+    .timetable-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .editable {
+      width: 100%;
+      border: none;
+      text-align: center;
+      background-color: #f0fdf4;
+    }
+
+    .readonly {
+      background-color: #f0f0f0;
+      font-weight: bold;
+    }
+
+    .submit-btn {
+      margin-top: 20px;
+      background-color: #388e3c;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .submit-btn:hover {
+      background-color: #2e7d32;
+    }
+  </style>
+</head>
+<body>
+  <h2>🗓️ Weekly Time Table</h2>
+  <div class="timetable-container">
+    <form id="timetableForm">
+      <table>
+        <thead>
+          <tr>
+            <th>Day / Time</th>
+            <th>8–9</th>
+            <th>9–10</th>
+            <th>10–10:30<br><small>Tea Break</small></th>
+            <th>10:30–11:30</th>
+            <th>11:30–12:30</th>
+            <th>12:30–2:30<br><small>Lunch</small></th>
+            <th>2:30–3:30</th>
+            <th>3:30–4:30</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% ['mon','tue','wed','thu','fri','sat'].forEach(day => { %>
+            <tr>
+                <td><%= day.charAt(0).toUpperCase() + day.slice(1) %></td>
+
+                <td>
+                  <input type="text" name="<%= day %>_8_9" class="editable" 
+                         value="<%= timetable[day + '_8_9'] || '' %>" placeholder="Sub / Class">
+                </td>
+                
+                <td>
+                  <input type="text" name="<%= day %>_9_10" class="editable" 
+                         value="<%= timetable[day + '_9_10'] || '' %>" placeholder="Sub / Class">
+                </td>
+                
+                <td class="readonly">Break</td>
+                
+                <td>
+                  <input type="text" name="<%= day %>_1030_1130" class="editable" 
+                         value="<%= timetable[day + '_1030_1130'] || '' %>" placeholder="Sub / Class">
+                </td>
+                
+                <td>
+                  <input type="text" name="<%= day %>_1130_1230" class="editable" 
+                         value="<%= timetable[day + '_1130_1230'] || '' %>" placeholder="Sub / Class">
+                </td>
+                
+                <td class="readonly">Lunch</td>
+                
+                <td>
+                  <input type="text" name="<%= day %>_230_330" class="editable" 
+                         value="<%= timetable[day + '_230_330'] || '' %>" placeholder="Sub / Class">
+                </td>
+                
+                <td>
+                  <input type="text" name="<%= day %>_330_430" class="editable" 
+                         value="<%= timetable[day + '_330_430'] || '' %>" placeholder="Sub / Class">
+                </td>
+                
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <button class="submit-btn" type="submit">Submit Time Table</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('timetableForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      const data = {};
+      formData.forEach((value, key) => {
+        data[key] = value;
+      });
+
+      try {
+        const res = await fetch('/submit-timetable', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+        alert(result.message || 'Time table saved successfully!');
+      } catch (err) {
+        console.error('Error:', err);
+        alert('Error submitting timetable');
+      }
+    });
+  </script>
+</body>
+</html>

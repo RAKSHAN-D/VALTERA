@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>📚 Timetable</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0fdf4;
+      padding: 20px;
+    }
+    
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4fdf4;
+    margin: 20px;
+  }
+
+  h2 {
+    text-align: center;
+    color: #2f855a;
+  }
+
+  table {
+    width: 100%;
+    max-width: 1000px;
+    margin: 30px auto;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    border: 1px solid #ccc;
+    padding: 20px;
+    text-align: center;
+    font-size: 16px;
+    min-width: 100px;
+    height: 80px;
+  }
+
+  th {
+    background-color: #48bb78;
+    color: white;
+  }
+
+  input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    text-align: center;
+    font-size: 16px;
+  }
+
+  .controls {
+    text-align: center;
+  }
+
+  .controls button {
+    background-color: #38a169;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  .controls button:hover {
+    background-color: #2f855a;
+  }
+
+  .locked input {
+    background-color: #e2e8f0;
+    pointer-events: none;
+  }
+
+
+    h2 {
+      text-align: center;
+      color: #2f855a;
+    }
+
+    table {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+  }
+
+  th, td {
+    border: 1px solid #a5d6a7;
+    padding: 12px;
+    text-align: center;
+  }
+
+  th {
+    background-color: #c8e6c9;
+    color: #1b5e20;
+  }
+
+  input {
+    width: 100%;
+    border: none;
+    text-align: center;
+    background: transparent;
+    font-size: 14px;
+  }
+    
+    
+    
+    .break {
+      background-color: #edf2f7;
+      font-weight: bold;
+      color: #2d3748;
+    }
+
+    .controls {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .controls button {
+      background-color: #38a169;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .controls button:hover {
+      background-color: #2f855a;
+    }
+    .locked input {
+      background-color: #e2e8f0;
+      pointer-events: none;
+    }
+
+  </style>
+  <script>
+    function saveTimetable() {
+      const data = [];
+      const rows = document.querySelectorAll("tbody tr");
+      rows.forEach((row, dayIndex) => {
+        const day = row.getAttribute("data-day");
+        row.querySelectorAll("td").forEach((cell, i) => {
+          const input = cell.querySelector("input");
+          if (input) {
+            data.push({
+              day,
+              slot: i,
+              entry: input.value
+            });
+          }
+        });
+      });
+      fetch("/teacher/timetable", {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ entries: data })
+      }).then(() => alert("✅ Timetable saved successfully!"));
+    }
+
+    function lockTimetable() {
+      document.querySelectorAll("td input").forEach(input => {
+        input.disabled = true;
+        input.parentElement.classList.add("locked");
+      });
+    }
+
+    function printTimetable() {
+      window.print();
+    }
+  </script>
+</head>
+<body>
+
+  <h2>📅 Teaching Timetable - Subject & Room</h2>
+
+  <form onsubmit="event.preventDefault(); saveTimetable();">
+    
+    <table>
+        <thead>
+          <tr>
+            <th>Day / Time</th>
+            <th>8-9</th>
+            <th>9-10</th>
+            <th>10-10:30<br>(Break)</th>
+            <th>10:30-11:30</th>
+            <th>11:30-12:30</th>
+            <th>12:30-2:30<br>(Lunch)</th>
+            <th>2:30-3:30</th>
+            <th>3:30-4:30</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]; %>
+          <% days.forEach(day => { %>
+            <tr>
+              <th><%= day %></th>
+              <% for(let i = 0; i < 8; i++) { %>
+                <td><input type="text" placeholder="Sub / Room"></td>
+              <% } %>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+
+    <div class="controls">
+      <button type="submit">💾 Save Timetable</button>
+      <button type="button" onclick="lockTimetable()">🔒 Lock</button>
+      <button type="button" onclick="printTimetable()">🖨️ Print</button>
+    </div>
+  </form>
+
+</body>
+</html>

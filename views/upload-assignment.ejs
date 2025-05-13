@@ -1,0 +1,16 @@
+<h2>Upload Assignment</h2>
+
+<form action="/upload-assignment" method="POST" enctype="multipart/form-data">
+  <input type="text" name="title" placeholder="Assignment Title" required />
+
+  <input type="text" name="teacher_name" placeholder="Teacher's Username" required />
+
+  <input type="file" name="assignment" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png" required />
+
+  <button type="submit">Submit Assignment</button>
+</form>
+
+<% if (typeof uploadSuccess !== 'undefined' && uploadSuccess) { %>
+    <p style="color: green;"><%= uploadSuccess %></p>
+  <% } %>
+  

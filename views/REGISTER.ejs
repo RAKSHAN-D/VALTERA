@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>HOD Registration</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom right, #eafaf1, #d2f2e4);
+      color: #2f5d3d;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      min-height: 100vh;
+    }
+
+    h1 {
+      color: #c01019;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 1.7rem;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    form {
+      background: #ffffff;
+      padding: 30px 35px;
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 420px;
+      animation: slideIn 0.8s ease;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      margin-bottom: 18px;
+      border: 1px solid #b4dfc4;
+      border-radius: 6px;
+      font-size: 1em;
+      transition: box-shadow 0.3s;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px #76c893;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #4e944f;
+      color: white;
+      font-size: 1em;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.25s ease-in-out;
+    }
+
+    button:hover {
+      background-color: #2d6a4f;
+    }
+
+    small {
+      font-size: 0.85em;
+      color: #4d8062;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>REGISTRATION IS ONLY FOR HOD<br>STUDENTS AND TEACHERS SHOULD DIRECTLY LOGIN</h1>
+
+  <form action="/register" method="POST">
+    <label>Name:</label>
+    <input type="text" name="name" required placeholder="Your full name"/>
+
+    <label>Email:</label>
+    <input type="email" name="email" required placeholder="you@example.com"/>
+
+    <label>Password:</label>
+    <input type="password" name="password" required placeholder="********"/>
+
+    <label>Role:</label>
+    <select name="role" id="roleSelect" onchange="toggleSecretCode()">
+      <option value="hod" selected>HOD</option>
+    </select>
+
+    <div id="secretCodeField">
+      <label>Secret Code:</label>
+      <input type="text" name="secretCode" required placeholder="*******" />  
+    </div>
+
+    <br/>
+    <button type="submit">Register</button>
+  </form>
+
+  <script>
+    function toggleSecretCode() {
+      const role = document.getElementById("roleSelect").value;
+      const codeField = document.getElementById("secretCodeField");
+      codeField.style.display = role === "hod" ? "block" : "none";
+    }
+    window.onload = toggleSecretCode;
+  </script>
+
+</body>
+</html>

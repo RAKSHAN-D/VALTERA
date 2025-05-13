@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Received Assignments</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f6fff8;
+      padding: 30px;
+      margin: 0;
+    }
+
+    h2 {
+      color: #2d6a4f;
+      font-size: 26px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #2d6a4f;
+      color: white;
+    }
+
+    td a {
+      color: #2d6a4f;
+      text-decoration: none;
+    }
+
+    td a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Received Assignments</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Submitted By</th>
+        <th>View Assignment</th>
+        <th>Download Assignment</th>
+        <th>Delete</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <% assignments.forEach(assignment => { %>
+        <tr>
+          <td><%= assignment.title %></td>
+          <td><%= assignment.student_name %></td> <!-- Display student's name here -->
+          <td><a href="/uploads/<%= assignment.file_path %>" target="_blank">👁️ View</a></td>
+          <td><a href="/uploads/<%= assignment.file_path %>" download>⬇️ Download</a></td>
+          <td>
+            <form action="/delete-assignment/<%= assignment.id %>" method="POST" onsubmit="return confirm('Are you sure you want to delete this assignment?');">
+              <button type="submit" style="background-color: red; color: white; border: none; padding: 5px 10px; cursor: pointer;">🗑️ Delete</button>
+            </form>
+          </td>
+          
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+</body>
+</html>

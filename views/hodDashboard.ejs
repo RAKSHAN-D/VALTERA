@@ -1,0 +1,311 @@
+<head>
+  <title>HOD Dashboard</title>
+ <!-- Head remains the same until <style> -->
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    padding: 20px;
+    background: #eafaf1;
+    color: #333;
+    margin: 0;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to right, #d2f4e1, #e8fce8);
+    padding: 20px 40px;
+    border-bottom: 3px solid #74c69d;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  }
+
+  .logo {
+    height: 70px;
+  }
+
+  .profile-pic {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #2d6a4f;
+  }
+
+  .welcome {
+    flex: 1;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1b4332;
+  }
+
+  .section-card {
+    background: white;
+    padding: 25px;
+    margin: 30px auto;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s;
+  }
+
+  .section-card:hover {
+    transform: scale(1.01);
+  }
+
+  h2 {
+    margin-top: 0;
+    color: #1e3d2f;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  input, select, button {
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+  }
+
+  button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #388e3c;
+  }
+
+  .delete-btn {
+  color: white;
+  border: none;
+  font-size: 16px;
+    padding: 10px 1px;
+    border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.delete-btn:hover {
+  background-color: #b71c1c;
+}
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+  }
+
+  th, td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }
+
+  .fancy-divider, .fancy-divider2 {
+    height: 4px;
+    margin: 40px 0;
+    background: linear-gradient(to right, #4CAF50, #81C784, #A5D6A7);
+    border-radius: 4px;
+    border: none;
+  }
+
+  .logout-container {
+    text-align: center;
+    margin-top: 50px;
+  }
+
+  .logout-container button {
+    background-color: #e53935;
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 8px;
+  }
+
+  /* Optional: Responsive tweak */
+  @media (max-width: 600px) {
+    .welcome {
+      font-size: 1.2rem;
+    }
+
+    .section-card {
+      width: 95%;
+    }
+  }
+</style>
+
+</head>
+<body>
+
+  <% if (typeof message !== 'undefined') { %>
+    <script>alert("<%= message %>");</script>
+  <% } %>
+
+  <% if (success) { %>
+    <script>
+      alert("<%= success %>");
+    </script>
+  <% } %>
+  
+  <% if (error) { %>
+    <script>
+      alert("<%= error %>");
+    </script>
+  <% } %>
+  <% if (typeof deleted !== "undefined") { %>
+    <% if (deleted === "success") { %>
+      <script>alert("✅ Document deleted successfully!");</script>
+    <% } else if (deleted === "failure") { %>
+      <script>alert("❌ Failed to delete document!");</script>
+    <% } %>
+  <% } %>
+  <div class="header">
+    <img src="<%= user.college === 'SDM' ? '/images/college_logo.png' : '/images/college_logo2.png' %>" 
+     alt="College Logo" 
+     class="logo">
+  
+    <div class="welcome">
+      Welcome Sir, <%= user.name %>  
+      (<%= user.college %> - HOD, <%= user.branch %>)
+    </div>
+  
+    <img src="/IMAGES/V-LOGO.png<%= user.photo %>" alt="Profile Photo" class="profile-pic">
+  </div>
+  
+  <!-- Add Student -->
+  <div class="section-card">
+    <h2>Add Student</h2>
+    <form action="/add-user" method="POST">
+      <input type="hidden" name="role" value="student">
+      <input type="text" name="name" placeholder="Student Name" required>
+      <input type="email" name="email" placeholder="Student Email" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit">Add Student</button>
+      </form>
+      <form action="/view-students" method="GET" style="margin-top: 15px;">
+        <button type="submit" style="background-color: #ff9800;">View Students</button>
+      </form>
+  </div>
+
+  <!-- Add Teacher -->
+  <div class="section-card">
+    <h2>Add Teacher</h2>
+    <form action="/add-user" method="POST">
+      <input type="hidden" name="role" value="teacher">
+      <input type="text" name="name" placeholder="Teacher Name" required>
+      <input type="email" name="email" placeholder="Teacher Email" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit">Add Teacher</button>
+    </form>
+    <form action="/view-teachers" method="GET" style="margin-top: 15px;">
+      <button type="submit" style="background-color: #ff9800;">View Teachers</button>
+    </form>
+  </div>
+
+  <!-- Upload Document -->
+  <div class="section-card">
+    <h2>Upload Document</h2>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+      <input type="text" name="title" placeholder="Title" required>
+      <select name="type" required>
+        <option value="notes">Notes</option>
+        <option value="circular">Circular</option>
+      </select>
+      <input type="file" name="document" required>
+      <button type="submit">Upload</button>
+    </form>
+  </div>
+  <hr class="fancy-divider">
+<!-- Uploaded Notes -->
+  <div class="section">
+    <h2>Uploaded Documents</h2>
+
+    <h3>Notes</h3>
+    <table>
+      <tr>
+        <th>Title</th>
+        <th>View</th>
+        <th>Download</th>
+        <th>Action</th>
+      </tr>
+      <% notes.forEach(doc => { %>
+        <tr>
+          <td><%= doc.title %></td>
+          <td><a href="/<%= doc.filename %>" target="_blank">View</a></td>
+          <td><a href="/<%= doc.filename %>" download>Download</a></td>
+          <td>
+            <form action="/delete-document/<%= doc.id %>" method="POST" onsubmit="return confirm('Are you sure you want to delete this file?');">
+              <button type="submit" class="delete-btn">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }); %>
+    </table>
+    <hr class="fancy-divider2">
+    <h3>Circulars</h3>
+    <table>
+      <tr>
+        <th>Title</th>
+        <th>View</th>
+        <th>Download</th>
+        <th>Action</th>
+      </tr>
+      <% circulars.forEach(doc => { %>
+        <tr>
+          <td><%= doc.title %></td>
+          <td><a href="/<%= doc.filename %>" target="_blank">View</a></td>
+          <td><a href="/<%= doc.filename %>" download>Download</a></td>
+          <td>
+            <form action="/delete-document/<%= doc.id %>" method="POST" onsubmit="return confirm('Are you sure you want to delete this file?');">
+              <button type="submit" class="delete-btn">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }); %>
+    </table>
+  </div>
+
+  <div style="text-align: center; margin-top: 40px;">
+    <form action="/logout" method="get" style="display: inline-block;">
+      <button style="
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        display: inline-block;
+      ">
+        Logout
+      </button>
+    </form>
+  </div>
+  
+  
+
+  <script>
+    const uploadStatus = "<%= uploadStatus %>";
+    if (uploadStatus === "success") {
+      alert("File uploaded successfully!");
+    } else if (uploadStatus === "failure") {
+      alert("Failed to upload file.");
+    }
+  </script>
+
+</body>
+</html>
