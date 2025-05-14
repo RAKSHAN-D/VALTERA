@@ -64,7 +64,7 @@ app.get("/about", (req, res) => res.render("about.ejs"));
 app.get("/services/Basic", (req, res) => res.render("basic.ejs"));
 app.get("/services/Intermediate", (req, res) => res.render("Intermediate.ejs"));
 app.get("/services/Advance", (req, res) => res.render("Advance.ejs"));
-app.get("/register", (req, res) => res.render("register"));
+app.get("/register", (req, res) => res.render("REGISTER"));
 app.get("/login", (req, res) => res.render("login"));
 
 app.post("/register", async (req, res) => {
