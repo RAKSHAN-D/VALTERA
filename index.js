@@ -119,7 +119,12 @@ app.post("/register", async (req, res) => {
       branch: foundBranch
     };
   
-    res.redirect("/dashboard");
+res.render("hodDashboard", {
+  name,
+  college: foundCollege,
+  branch: foundBranch
+});
+
   } catch (err) {
     console.error(err);
     res.status(500).send("Error registering user");
