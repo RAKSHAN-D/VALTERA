@@ -182,10 +182,22 @@
   </form>
 
   <script>
-    function toggleAssignmentForm() {
-      const form = document.getElementById("assignmentForm");
-      form.style.display = form.style.display === "none" ? "block" : "none";
-    }
-  </script>
+  function toggleAssignmentForm() {
+    const form = document.getElementById("assignmentForm");
+    form.style.display = form.style.display === "none" ? "block" : "none";
+  }
+</script>
+
+<% if (typeof assignmentStatus !== 'undefined' && assignmentStatus === "success") { %>
+  <% if (typeof uploadSuccess !== 'undefined' && uploadSuccess) { %>
+      <script>
+        alert("✅ Assignment uploaded successfully!");
+      </script>
+    <% } else if (typeof uploadError !== 'undefined' && uploadError) { %>
+      <script>
+        alert("❌ Failed to upload assignment.");
+      </script>
+    <% } %>
+<% } %>
 </body>
 </html>
