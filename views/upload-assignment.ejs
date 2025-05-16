@@ -1,16 +1,109 @@
-<h2>Upload Assignment</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Upload Assignment</title>
+  <style>
+    body {
+      background-color: #e6f4ea;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #2f4f4f;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 90vh;
+    }
 
-<form action="/upload-assignment" method="POST" enctype="multipart/form-data">
-  <input type="text" name="title" placeholder="Assignment Title" required />
+    h2 {
+      color: #2e7d32;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      font-weight: 700;
+    }
 
-  <input type="text" name="teacher_name" placeholder="Teacher's Username" required />
+    form {
+      background-color: #ffffff;
+      padding: 2rem 3rem;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(46, 125, 50, 0.3);
+      width: 100%;
+      max-width: 400px;
+      box-sizing: border-box;
+    }
 
-  <input type="file" name="assignment" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png" required />
+    input[type="text"],
+    input[type="file"] {
+      width: 100%;
+      padding: 0.6rem 1rem;
+      margin-bottom: 1.2rem;
+      border: 2px solid #a5d6a7;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
 
-  <button type="submit">Submit Assignment</button>
-</form>
+    input[type="text"]:focus,
+    input[type="file"]:focus {
+      outline: none;
+      border-color: #388e3c;
+      box-shadow: 0 0 5px #66bb6a;
+    }
 
-<% if (typeof uploadSuccess !== 'undefined' && uploadSuccess) { %>
-    <p style="color: green;"><%= uploadSuccess %></p>
-  <% } %>
-  
+    button {
+      width: 100%;
+      background-color: #388e3c;
+      color: white;
+      font-size: 1.1rem;
+      padding: 0.7rem 0;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #2e7d32;
+    }
+
+    .dashboard-btn {
+      background-color: #2e7d32;
+      margin-top: 1rem;
+      font-size: 1rem;
+      padding: 0.6rem 0;
+    }
+
+    p {
+      margin-top: 1rem;
+      font-weight: 600;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h2>Upload Assignment</h2>
+
+    <form action="/upload-assignment" method="POST" enctype="multipart/form-data">
+      <input type="text" name="title" placeholder="Assignment Title" required />
+
+      <input type="text" name="teacher_username" placeholder="Teacher's Username" required />
+
+      <input type="file" name="assignment" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png" required />
+
+      <button type="submit">Submit Assignment</button>
+
+      <!-- Back to dashboard button below submit -->
+      <a href="/student-dashboard">
+        <button type="button" class="dashboard-btn">← Back to Student Dashboard</button>
+      </a>
+    </form>
+
+    <% if (typeof uploadSuccess !== 'undefined' && uploadSuccess) { %>
+      <p style="color: green;"><%= uploadSuccess %></p>
+    <% } %>
+  </div>
+</body>
+</html>
