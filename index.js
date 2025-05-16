@@ -750,48 +750,50 @@ async function getFileByTitle(title) {
   // Replace this with the actual database query to fetch the file associated with the title
   return pool.query('SELECT * FROM documents WHERE title = $1', [title]).then(result => result.rows[0]);
 }
-
-
-
-app.post("/upload-assignment", upload.single("assignment"), async (req, res) => {
+app.post('/upload-assignment', upload.single('assignment'), async (req, res) => {
   const user = req.session.user;
-  if (!user || user.role !== "student") return res.send("Unauthorized.");
+  if (!user || user.role !== 'student') return res.send('Unauthorized.');
 
-  const { title, teacher_name } = req.body;
+  const { title, teacher_username } = req.body;   // renamed for clarity
   const file = req.file;
 
-  if (!file) {
-    return res.send("No file uploaded.");
-  }
+  if (!file) return res.send('No file uploaded.');
 
   try {
-    // Get teacher's username (assumed to be their email or a unique identifier)
-    const teacherResult = await pool.query(
-      "SELECT email FROM users WHERE name = $1 AND role = 'teacher' AND branch = $2 AND college = $3",
-      [teacher_name, user.branch, user.college]
+    // 1️⃣  Look‑up the teacher by their username (or email, if that’s what you store)
+    const teacherRes = await pool.query(
+      `SELECT email 
+         FROM users 
+        WHERE name = $1          -- or "email" if that’s your unique field
+          AND role      = 'teacher'
+          AND branch    = $2
+          AND college   = $3`,
+      [teacher_username, user.branch, user.college]
     );
+if (teacherRes.rows.length === 0)
+      return res.send('❌ Teacher not found in your branch/college.');
 
-    if (teacherResult.rows.length === 0) {
-      return res.send("❌ Teacher not found in your branch and college.");
-    }
+    const teacherEmail = teacherRes.rows[0].email;
 
-    const teacher_email = teacherResult.rows[0].email;
-
-    // Insert assignment into the database
-    await pool.query(
-      `INSERT INTO assignments 
-        (title, file_path, submitted_by, teacher_username, branch, college, submitted_at) 
-       VALUES ($1, $2, $3, $4, $5, $6, NOW())`,
-      [title, file.filename, user.email, teacher_email, user.branch, user.college]
-    );
-
-    res.send("Assignment uploaded successfully.");
+    // 2️⃣  Insert the assignment row
+   await pool.query(
+  `INSERT INTO assignments 
+     (title, file_path, submitted_by, teacher_username, branch, college, submitted_at)
+   VALUES ($1, $2, $3, $4, $5, $6, NOW())`,
+  [title, file.filename, user.email, teacherEmail, user.branch, user.college]
+);
+ res.send('✅ Assignment uploaded successfully.');
   } catch (err) {
-    console.error("Error uploading assignment:", err);
-    res.send("Error uploading assignment.");
+    console.error('Error uploading assignment:', err);
+    res.send('Error uploading assignment.');
   }
 });
-
+app.get('/upload-assignment', (req, res) => {
+  const user = req.session.user;
+  if (!user || user.role !== 'student') return res.send('Unauthorized.');
+  
+  res.render('upload-assignment'); // Make sure upload-assignment.ejs exists in /views
+});
 app.get("/my-assignments", async (req, res) => {
   const user = req.session.user;
   if (!user || user.role !== "student") return res.send("Unauthorized.");
